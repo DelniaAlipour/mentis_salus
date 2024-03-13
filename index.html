@@ -219,7 +219,7 @@
         <div class="screen hidden" id="aiTherapistChat">
             <h2>AI Therapist Chat</h2>
             <div id="chatContainer" class="chat-container">
-                <!-- Chat messages will be appended here -->
+             
             </div>
             <input type="text" id="userInput" placeholder="Type your message..." class="chat-input"/>
             <button class="btn" onclick="sendMessage()">Send</button>
@@ -266,7 +266,7 @@
         <li><a href="https://example.com/article1" target="_blank">Understanding Stress</a></li>
         <li><a href="https://example.com/article2" target="_blank">Benefits of Meditation</a></li>
         <li><a href="https://example.com/article3" target="_blank">Breathing Techniques for Relaxation</a></li>
-        <!-- Add more links as needed -->
+     
     </ul>
     <button class="btn" onclick="showScreen('home')">Back to Home</button>
 </div>
@@ -320,12 +320,11 @@
     }
 });
 function submitFeedback() {
-    var feedbackText = document.getElementById('feedbackText').value;
-    // Here you would typically send the feedback to your server
+    
     alert("Feedback submitted. Thank you!");
-    // Clear the textarea
+
     document.getElementById('feedbackText').value = '';
-    // Return to the home screen
+  
     showScreen('home');
 }
 function sendMessage() {
@@ -337,15 +336,11 @@ function sendMessage() {
     userMessage.textContent = "You: " + input.value;
     chatContainer.appendChild(userMessage);
 
-    // Simulated AI response (immediate for demo purposes)
     var aiResponse = document.createElement('p');
     aiResponse.textContent = "AI Therapist: I understand. How does that make you feel?";
     chatContainer.appendChild(aiResponse);
 
-    // Scroll to the latest message
     chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    // Clear the input field
     input.value = '';
 }
 
