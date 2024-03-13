@@ -108,22 +108,24 @@
     justify-content: space-around;
 }
 
-#burgerMenuToggle {
-    font-size: 24px; 
-    cursor: pointer;
-    margin-left: 10px; 
-}
-
 .burger-menu {
-    position: absolute;
-    background-color: #fffefe;
-    border-radius: 5px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    width: 200px; 
-    padding: 10px;
-    display: none; 
-    z-index: 10;
-}
+            position: absolute;
+            top: 68%;
+            right: 20%;
+            background-color: #fffefe;
+            border-radius: 5px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 10px;
+            display: none;
+            z-index: 99;
+        }
+
+        #burgerMenuToggle {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
 
 .burger-menu .btn, .burger-menu .icon-btn {
     display: block;
@@ -131,6 +133,27 @@
     margin: 5px 0;
     text-align: left;
 }
+.chat-container {
+    width: 100%;
+    height: 300px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-y: auto; 
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+
+.chat-input {
+    width: calc(100% - 90px); 
+    padding: 10px;
+    margin-right: 10px; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: inline-block; 
+}
+
+
 
 
     </style>
@@ -146,6 +169,7 @@
                 <button class="btn emergency" onclick="confirmEmergency()">Emergency Help</button>
                 <button class="btn get-help" onclick="showScreen('getHelp')">Stimulus Stress Detection</button>
                 <div id="burgerMenuToggle"><i class="fas fa-bars"></i></div>
+                
             </div>
             <!-- Burger Menu goes here -->
             <div class="burger-menu" id="burgerMenu">
@@ -165,6 +189,7 @@
         <div class="vertical-buttons">
             <button class="btn" onclick="showScreen('interventionEngage')">Start a Breathing Exercise</button>
             <button class="btn" onclick="showScreen('interventionEngage')">Try a Meditation Session</button>
+            <button class="btn" onclick="showScreen('aiTherapistChat')">Chat with an AI Therapist</button>
             <button class="btn therapy" onclick="showScreen('connectTherapist')">Talk to your Therapist</button>
             <button class="btn" onclick="showScreen('home')">Back to Home</button>
         </div>
@@ -194,7 +219,15 @@
             <button class="btn" onclick="showScreen('home')">Back to Home</button>
         </div>
         </div>
-
+        <div class="screen hidden" id="aiTherapistChat">
+            <h2>AI Therapist Chat</h2>
+            <div id="chatContainer" class="chat-container">
+                <!-- Chat messages will be appended here -->
+            </div>
+            <input type="text" id="userInput" placeholder="Type your message..." class="chat-input"/>
+            <button class="btn" onclick="sendMessage()">Send</button>
+            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+        </div>
         <!-- Settings Screen -->
         <div class="screen hidden" id="settings">
             <h2>Settings</h2>
@@ -297,6 +330,26 @@ function submitFeedback() {
     document.getElementById('feedbackText').value = '';
     // Return to the home screen
     showScreen('home');
+}
+function sendMessage() {
+    var input = document.getElementById('userInput');
+    var chatContainer = document.getElementById('chatContainer');
+
+    // User's message
+    var userMessage = document.createElement('p');
+    userMessage.textContent = "You: " + input.value;
+    chatContainer.appendChild(userMessage);
+
+    // Simulated AI response (immediate for demo purposes)
+    var aiResponse = document.createElement('p');
+    aiResponse.textContent = "AI Therapist: I understand. How does that make you feel?";
+    chatContainer.appendChild(aiResponse);
+
+    // Scroll to the latest message
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    // Clear the input field
+    input.value = '';
 }
 
 
