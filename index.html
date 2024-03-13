@@ -4,171 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Mentis Salus Interface</title>
-    <style>
-         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7e8d9;
-            color: #5a4a42;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .mentis-salus {
-            max-width: 600px;
-            width: 100%;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            background-color: #fffefe;
-            text-align: center;
-        }
-
-        .screen.hidden {
-            display: none;
-        }
-
-        h1, h2 {
-            color: #8a6560;
-            text-align: center;
-        }
-
-        .greeting, .mood, p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            text-align: center;
-        }
-
-        .mood-status {
-            font-weight: bold;
-            color: #4a90e2;
-        }
-
-        .btn {
-            display: inline-block; 
-            margin: 10px;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 20px;
-            background-color: #e0a96d;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .btn:hover {
-            background-color: #c98a5f;
-        }
-
-        .btn.therapy, .btn.emergency, .btn.get-help {
-            margin: 10px auto;
-            font-size: 18px; 
-        }
-
-        .btn.therapy {
-            background-color: #4a90e2;
-        }
-
-        .btn.therapy:hover, .btn.emergency:hover, .btn.get-help:hover {
-            background-color: #3d77b6;
-        }
-
-        .btn.emergency {
-            background-color: #ff4d4d;
-        }
-
-        .btn.emergency:hover {
-            background-color: #cc0000;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: #5a4a42;
-        }
-        .vertical-buttons .btn {
-    display: block; 
-    margin: 10px auto; 
-    width: 60%; 
-}
-
-.menu {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.burger-menu {
-            position: absolute;
-            top: 68%;
-            right: 32%;
-            background-color: #fffefe;
-            border-radius: 5px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            width: 200px;
-            padding: 10px;
-            display: none;
-            z-index: 99;
-        }
-
-        #burgerMenuToggle {
-            font-size: 24px;
-            cursor: pointer;
-            margin-right: 10px;
-            position: relative;
-        }
-
-.burger-menu .btn, .burger-menu .icon-btn {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
-    text-align: left;
-}
-.chat-container {
-  
-    height: 300px; 
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    overflow-y: auto; 
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-}
-
-.chat-input {
-    width: calc(100% - 90px); 
-    padding: 10px;
-    margin-right: 10px; 
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    display: inline-block; 
-}
-
-.chat-input-container {
-    width: 100%; 
-    display: flex;
-    align-items: center;
-}
-
-.icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 24px;
-    color: #5a4a42;
-    padding: 10px;
-}
-
-
-
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="javascript.js"></script>
 </head>
 <body>
     <div class="mentis-salus">
@@ -203,7 +40,11 @@
             <button class="btn" onclick="showScreen('interventionEngage')">Try a Meditation Session</button>
             <button class="btn" onclick="showScreen('aiTherapistChat')">Chat with an AI Therapist</button>
             <button class="btn therapy" onclick="showScreen('connectTherapist')">Talk to your Therapist</button>
-            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+         
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
+
         </div>
         </div>
         
@@ -220,6 +61,7 @@
             <p>How Do You Feel Now?</p>
             <button class="btn" onclick="showScreen('home')">Better</button>
             <button class="btn therapy" onclick="showScreen('connectTherapist')">Connect to Therapist</button>
+           
         </div>
 
         <!-- Connect to Therapist Screen -->
@@ -228,7 +70,12 @@
             <div class="vertical-buttons">
             <button class="btn therapy" onclick="startTherapySession()">Start Video Call</button>
             <button class="btn therapy" onclick="startTherapySession()">Start Audio Call</button>
-            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+        
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
+<button class="btn back-btn" onclick="goBack()">Back</button>
+
         </div>
         </div>
         <div class="screen hidden" id="aiTherapistChat">
@@ -244,13 +91,22 @@
                 </button>
             </div>
             <button class="btn" onclick="sendMessage()">Send</button>
-            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
+
+            <button class="btn back-btn" onclick="goBack()">Back</button>
         </div>
         
         <!-- Settings Screen -->
         <div class="screen hidden" id="settings">
             <h2>Settings</h2>
-            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+            <button class="btn" >Profile</button>
+            <button class="btn" >Notifications</button>
+            <button class="btn back-home-btn" onclick="showScreen('home')">
+                <i class="fas fa-home"></i> 
+            </button>
+            
         </div>
 
         <!-- Information Gathered Screen -->
@@ -267,7 +123,11 @@
             </div>
             <div class="nav-buttons">
                 <button class="btn" onclick="showScreen('getHelp')">&#8249; Get Help</button>
-                <button class="btn" onclick="showScreen('home')">&#8962; Home</button>
+         
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
+
             </div>
         </div>
         <!-- Emergency Options Screen -->
@@ -277,7 +137,11 @@
     <button class="btn" onclick="callYourDoctor()">Call Your Doctor</button>
     <button class="btn" onclick="shareSOS()">Share SOS</button>
     <button class="btn" onclick="call999()">Call 999</button>
-    <button class="btn" onclick="showScreen('home')">Back to Home</button>
+
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
+
     </div>
 </div>
 <!-- Educational Content Screen -->
@@ -285,12 +149,16 @@
     <h2>Educational Content</h2>
     <p>Explore resources to better understand and manage stress and anxiety.</p>
     <ul>
-        <li><a href="https://example.com/article1" target="_blank">Understanding Stress</a></li>
-        <li><a href="https://example.com/article2" target="_blank">Benefits of Meditation</a></li>
-        <li><a href="https://example.com/article3" target="_blank">Breathing Techniques for Relaxation</a></li>
+        <li><a href="" target="_blank">Understanding Stress</a></li>
+        <li><a href="" target="_blank">Benefits of Meditation</a></li>
+        <li><a href="" target="_blank">Breathing Techniques for Relaxation</a></li>
      
     </ul>
-    <button class="btn" onclick="showScreen('home')">Back to Home</button>
+
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
+
 </div>
 
 <!-- Feedback Screen -->
@@ -299,75 +167,15 @@
     <p>Your feedback is valuable to us. Please let us know how we can improve your experience.</p>
     <textarea id="feedbackText" rows="4" cols="50" placeholder="Enter your feedback here..."></textarea>
     <button class="btn" onclick="submitFeedback()">Submit Feedback</button>
-    <button class="btn" onclick="showScreen('home')">Back to Home</button>
-</div>
+ 
+<button class="btn back-home-btn" onclick="showScreen('home')">
+    <i class="fas fa-home"></i> 
+</button>
 
+</div>
 
     </div>
 
-    <script>
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(function(screen) {
-                screen.classList.add('hidden');
-            });
-
-    
-            document.getElementById(screenId).classList.remove('hidden');
-        }
-
-        function confirmEmergency() {
-            showScreen('emergencyOptions');
-        }
-
-        function callYourDoctor() {
-            alert("Calling your doctor...");
-        }
-
-        function shareSOS() {
-            alert("Sharing SOS...");
-        }
-
-        function call999() {
-            alert("Calling 999...");
-        }
-
-        
-        
-        document.getElementById('burgerMenuToggle').addEventListener('click', function() {
-    var menu = document.getElementById('burgerMenu');
-    if (menu.style.display === 'none' || menu.style.display === '') {
-        menu.style.display = 'block';
-    } else {
-        menu.style.display = 'none';
-    }
-});
-function submitFeedback() {
-    
-    alert("Feedback submitted. Thank you!");
-
-    document.getElementById('feedbackText').value = '';
-  
-    showScreen('home');
-}
-function sendMessage() {
-    var input = document.getElementById('userInput');
-    var chatContainer = document.getElementById('chatContainer');
-
-    // User's message
-    var userMessage = document.createElement('p');
-    userMessage.textContent = "You: " + input.value;
-    chatContainer.appendChild(userMessage);
-
-    var aiResponse = document.createElement('p');
-    aiResponse.textContent = "AI Therapist: I understand. How does that make you feel?";
-    chatContainer.appendChild(aiResponse);
-
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-    input.value = '';
-}
-
-
-    </script>
 
 </body>
 </html>
