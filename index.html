@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Mentis Salus Interface</title>
+    <style>
+         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7e8d9;
+            color: #5a4a42;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mentis-salus {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background-color: #fffefe;
+            text-align: center;
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        h1, h2 {
+            color: #8a6560;
+            text-align: center;
+        }
+
+        .greeting, .mood, p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .mood-status {
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        .btn {
+            display: inline-block; 
+            margin: 10px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background-color: #e0a96d;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #c98a5f;
+        }
+
+        .btn.therapy, .btn.emergency, .btn.get-help {
+            margin: 10px auto;
+            font-size: 18px; 
+        }
+
+        .btn.therapy {
+            background-color: #4a90e2;
+        }
+
+        .btn.therapy:hover, .btn.emergency:hover, .btn.get-help:hover {
+            background-color: #3d77b6;
+        }
+
+        .btn.emergency {
+            background-color: #ff4d4d;
+        }
+
+        .btn.emergency:hover {
+            background-color: #cc0000;
+        }
+
+       
+      
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #5a4a42;
+        }
+        .vertical-buttons .btn {
+    display: block; 
+    margin: 10px auto; 
+    width: 60%; 
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#burgerMenuToggle {
+    font-size: 24px; 
+    cursor: pointer;
+    margin-left: 10px; 
+}
+
+.burger-menu {
+    position: absolute;
+    background-color: #fffefe;
+    border-radius: 5px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    width: 200px; 
+    padding: 10px;
+    display: none; 
+    z-index: 10;
+}
+
+.burger-menu .btn, .burger-menu .icon-btn {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    text-align: left;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="mentis-salus">
+        <!-- Home Screen -->
+        <div class="screen" id="home">
+            <h1>Mentis Salus</h1>
+            <p class="greeting">Hey Emily,</p>
+            <p class="mood">Your Current Mood Is: <span class="mood-status">Calm 😌</span></p>
+            <div class="menu">
+                <button class="btn emergency" onclick="confirmEmergency()">Emergency Help</button>
+                <button class="btn get-help" onclick="showScreen('getHelp')">Stimulus Stress Detection</button>
+                <div id="burgerMenuToggle"><i class="fas fa-bars"></i></div>
+            </div>
+            <!-- Burger Menu goes here -->
+            <div class="burger-menu" id="burgerMenu">
+               
+                <button class="btn" onclick="showScreen('informationGathered')"> Information</button>
+                <button class="btn" onclick="showScreen('educationalContent')">Educational Content</button>
+                <button class="btn" onclick="showScreen('feedbackForm')">Feedback</button>
+                <button class="btn" onclick="showScreen('settings')"><i class="fas fa-cog"></i> Settings</button>
+            </div>
+            
+        </div>
+
+        <!-- Get Help Screen -->
+        <div class="screen hidden" id="getHelp">
+            <h2>Get Support</h2>
+            <p>🌟 Feeling a bit overwhelmed? That's okay, and it's completely normal. I'm here with tools to help you find your calm. 🌟</p>
+        <div class="vertical-buttons">
+            <button class="btn" onclick="showScreen('interventionEngage')">Start a Breathing Exercise</button>
+            <button class="btn" onclick="showScreen('interventionEngage')">Try a Meditation Session</button>
+            <button class="btn therapy" onclick="showScreen('connectTherapist')">Talk to your Therapist</button>
+            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+        </div>
+        </div>
+        
+
+        <!-- Intervention Engagement Screen -->
+        <div class="screen hidden" id="interventionEngage">
+            <h2>Engagement Activity</h2>
+            <button class="btn" onclick="showScreen('feedback')">Complete Session</button>
+        </div>
+
+        <!-- Feedback Screen -->
+        <div class="screen hidden" id="feedback">
+            <h2>Session Feedback</h2>
+            <p>How Do You Feel Now?</p>
+            <button class="btn" onclick="showScreen('home')">Better</button>
+            <button class="btn therapy" onclick="showScreen('connectTherapist')">Connect to Therapist</button>
+        </div>
+
+        <!-- Connect to Therapist Screen -->
+        <div class="screen hidden" id="connectTherapist">
+            <h2>Therapy Session</h2>
+            <div class="vertical-buttons">
+            <button class="btn therapy" onclick="startTherapySession()">Start Video Call</button>
+            <button class="btn therapy" onclick="startTherapySession()">Start Audio Call</button>
+            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+        </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div class="screen hidden" id="settings">
+            <h2>Settings</h2>
+            <button class="btn" onclick="showScreen('home')">Back to Home</button>
+        </div>
+
+        <!-- Information Gathered Screen -->
+        <div class="screen hidden" id="informationGathered">
+         
+            <div class="info-select">
+                <h2>Information Select</h2>
+                <p>to best assist you, your pin may collect and send the following information:</p>
+                <ul>
+                    <li>Heart Rate</li>
+                    <li>Body Temperature</li>
+                    <li>Vocal Pattern</li>
+                </ul>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn" onclick="showScreen('getHelp')">&#8249; Get Help</button>
+                <button class="btn" onclick="showScreen('home')">&#8962; Home</button>
+            </div>
+        </div>
+        <!-- Emergency Options Screen -->
+<div class="screen hidden" id="emergencyOptions">
+    <h2>Emergency Help Options</h2>
+    <div class="vertical-buttons">
+    <button class="btn" onclick="callYourDoctor()">Call Your Doctor</button>
+    <button class="btn" onclick="shareSOS()">Share SOS</button>
+    <button class="btn" onclick="call999()">Call 999</button>
+    <button class="btn" onclick="showScreen('home')">Back to Home</button>
+    </div>
+</div>
+<!-- Educational Content Screen -->
+<div class="screen hidden" id="educationalContent">
+    <h2>Educational Content</h2>
+    <p>Explore resources to better understand and manage stress and anxiety.</p>
+    <ul>
+        <li><a href="https://example.com/article1" target="_blank">Understanding Stress</a></li>
+        <li><a href="https://example.com/article2" target="_blank">Benefits of Meditation</a></li>
+        <li><a href="https://example.com/article3" target="_blank">Breathing Techniques for Relaxation</a></li>
+        <!-- Add more links as needed -->
+    </ul>
+    <button class="btn" onclick="showScreen('home')">Back to Home</button>
+</div>
+
+<!-- Feedback Screen -->
+<div class="screen hidden" id="feedbackForm">
+    <h2>Feedback</h2>
+    <p>Your feedback is valuable to us. Please let us know how we can improve your experience.</p>
+    <textarea id="feedbackText" rows="4" cols="50" placeholder="Enter your feedback here..."></textarea>
+    <button class="btn" onclick="submitFeedback()">Submit Feedback</button>
+    <button class="btn" onclick="showScreen('home')">Back to Home</button>
+</div>
+
+
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(function(screen) {
+                screen.classList.add('hidden');
+            });
+
+    
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function confirmEmergency() {
+            showScreen('emergencyOptions');
+        }
+
+        function callYourDoctor() {
+            alert("Calling your doctor...");
+        }
+
+        function shareSOS() {
+            alert("Sharing SOS...");
+        }
+
+        function call999() {
+            alert("Calling 999...");
+        }
+
+        
+        
+        document.getElementById('burgerMenuToggle').addEventListener('click', function() {
+    var menu = document.getElementById('burgerMenu');
+    if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'block';
+    } else {
+        menu.style.display = 'none';
+    }
+});
+function submitFeedback() {
+    var feedbackText = document.getElementById('feedbackText').value;
+    // Here you would typically send the feedback to your server
+    alert("Feedback submitted. Thank you!");
+    // Clear the textarea
+    document.getElementById('feedbackText').value = '';
+    // Return to the home screen
+    showScreen('home');
+}
+
+
+    </script>
+
+</body>
+</html>
