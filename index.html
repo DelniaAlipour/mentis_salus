@@ -122,6 +122,7 @@
             font-size: 24px;
             cursor: pointer;
             margin-right: 10px;
+            position: relative;
         }
 
 .burger-menu .btn, .burger-menu .icon-btn {
@@ -131,7 +132,7 @@
     text-align: left;
 }
 .chat-container {
-    width: 100%;
+  
     height: 300px; 
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -150,6 +151,20 @@
     display: inline-block; 
 }
 
+.chat-input-container {
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #5a4a42;
+    padding: 10px;
+}
 
 
 
@@ -218,13 +233,20 @@
         </div>
         <div class="screen hidden" id="aiTherapistChat">
             <h2>AI Therapist Chat</h2>
+            <p>Hi, Im Mentis - Your AI Therapist</p>
             <div id="chatContainer" class="chat-container">
-             
+             <p>How Do you Feel today?</p>
             </div>
-            <input type="text" id="userInput" placeholder="Type your message..." class="chat-input"/>
+            <div class="chat-input-container" style="display: flex; align-items: center;">
+                <input type="text" id="userInput" placeholder="Tell Mentis How You Feel..." class="chat-input" />
+                <button class="icon-btn" onclick="startAudioRecording()">
+                    <i class="fas fa-microphone"></i>
+                </button>
+            </div>
             <button class="btn" onclick="sendMessage()">Send</button>
             <button class="btn" onclick="showScreen('home')">Back to Home</button>
         </div>
+        
         <!-- Settings Screen -->
         <div class="screen hidden" id="settings">
             <h2>Settings</h2>
