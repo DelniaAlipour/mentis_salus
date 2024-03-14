@@ -37,7 +37,7 @@
             <p>🌟 Feeling a bit overwhelmed? That's okay, and it's completely normal. I'm here with tools to help you find your calm. 🌟</p>
         <div class="vertical-buttons">
             <button class="btn" onclick="showScreen('interventionEngage')">Start a Breathing Exercise</button>
-            <button class="btn" onclick="showScreen('interventionEngage')">Try a Meditation Session</button>
+            <button class="btn" onclick="showScreen('interventionEngage2')">Try a Meditation Session</button>
             <button class="btn" onclick="showScreen('aiTherapistChat')">Chat with an AI Therapist</button>
             <button class="btn therapy" onclick="showScreen('connectTherapist')">Talk to your Therapist</button>
          
@@ -51,10 +51,13 @@
 
         <!-- Intervention Engagement Screen -->
         <div class="screen hidden" id="interventionEngage">
-            <h2>Engagement Activity</h2>
+            <h2>Breathing Exercise</h2>
             <button class="btn" onclick="showScreen('feedback')">Complete Session</button>
         </div>
-
+        <div class="screen hidden" id="interventionEngage2">
+            <h2>Meditation Exercise</h2>
+            <button class="btn" onclick="showScreen('feedback')">Complete Session</button>
+        </div>
         <!-- Feedback Screen -->
         <div class="screen hidden" id="feedback">
             <h2>Session Feedback</h2>
@@ -174,12 +177,11 @@
 
 </div>
 <div class="dots-indicator">
-    <span class="dot"></span> <!-- Emergency Help -->
-    <span class="dot"></span> <!-- Start a Breathing Exercise -->
-    <span class="dot"></span> <!-- Try a Meditation Session -->
-    <span class="dot"></span> <!-- Chat with an AI Therapist -->
-    <span class="dot"></span> <!-- Talk to your Therapist -->
-</div>
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
 
     </div>
 

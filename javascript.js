@@ -1,12 +1,12 @@
 let touchStartX = 0;
 let touchStartTime = 0;
 let tapCount = 0;
-const screens = ['home', 'emergencyOptions', 'interventionEngage', 'aiTherapistChat', 'connectTherapist']; // Added 'home' to screens
-let currentScreenIndex = 0; // Start with 'home'
+const screens = ['home', 'emergencyOptions', 'getHelp', 'interventionEngage', 'interventionEngage2','aiTherapistChat', 'connectTherapist', 'burgerMenu']; // Added 'home' to screens
+let currentScreenIndex = 0; 
 
 document.addEventListener('DOMContentLoaded', () => {
     setupTouchEvents();
-    updateDotsIndicator(currentScreenIndex); // Initialize dots indicator
+    updateDotsIndicator(currentScreenIndex); 
     setupBurgerMenu();
 });
 
