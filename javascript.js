@@ -1,7 +1,7 @@
 let touchStartX = 0;
 let touchStartTime = 0;
 let tapCount = 0;
-const screens = ['home','emergencyOptions', 'getHelp','interventionEngage', 'interventionEngage1', 'interventionEngage2', 'aiTherapistChat', 'connectTherapist', 'informationGathered'];
+const screens = ['home','emergencyOptions', 'getHelp','aiTherapistChat', 'connectTherapist', 'informationGathered'];
 let screenHistory = []; 
 
 document.addEventListener('DOMContentLoaded', () => {
