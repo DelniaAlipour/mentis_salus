@@ -2,7 +2,7 @@ let touchStartX = 0;
 let touchStartTime = 0;
 let tapCount = 0;
 const screens = ['home','emergencyOptions', 'getHelp','interventionEngage', 'interventionEngage1', 'interventionEngage2', 'aiTherapistChat', 'connectTherapist', 'informationGathered'];
-let screenHistory = []; // Stack to keep track of navigation history
+let screenHistory = []; 
 
 document.addEventListener('DOMContentLoaded', () => {
     setupTouchEvents();
@@ -45,13 +45,13 @@ function handleSwipe(touchEndX) {
 }
 
 function navigateToScreen(direction) {
-    // Swiping back - Go to the previous screen in history
+   
     if (direction === 1 && screenHistory.length > 1) {
         goBack();
-    } else if (direction === -1) { // Swiping forward - Go to the next screen in a predefined order
+    } else if (direction === -1) { 
         let currentScreenId = screenHistory[screenHistory.length - 1];
         let currentIndex = screens.indexOf(currentScreenId);
-        let nextIndex = (currentIndex + 1) % screens.length; // Cycle through the screens
+        let nextIndex = (currentIndex + 1) % screens.length; 
         showScreen(screens[nextIndex]);
     }
 }
@@ -78,7 +78,7 @@ function updateNavigationHistory(screenId) {
 
 function goBack() {
     if (screenHistory.length > 1) {
-        screenHistory.pop(); // Remove current screen
+        screenHistory.pop(); 
         const previousScreenId = screenHistory[screenHistory.length - 1];
         showScreen(previousScreenId, false);
     }
@@ -86,8 +86,7 @@ function goBack() {
 
 function updateDotsIndicator() {
     const dotsContainer = document.querySelector('.dots-indicator');
-    dotsContainer.innerHTML = ''; // Clear existing dots
-
+    dotsContainer.innerHTML = ''; 
     screens.forEach((screen, index) => {
         const dot = document.createElement('span');
         dot.className = 'dot' + (screen === screenHistory[screenHistory.length - 1] ? ' active' : '');
@@ -101,7 +100,7 @@ function setupBurgerMenu() {
 
     if (burgerMenuToggle && burgerMenu) {
         burgerMenuToggle.addEventListener('click', () => {
-            // Toggle display of the burger menu
+          
             if (burgerMenu.style.display === 'none' || !burgerMenu.style.display) {
                 burgerMenu.style.display = 'block';
             } else {
@@ -110,9 +109,6 @@ function setupBurgerMenu() {
         });
     }
 }
-
-
-// Feedback, sendMessage, and other functions remain unchanged
 
 
 function submitFeedback() {
