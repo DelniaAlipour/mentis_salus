@@ -213,5 +213,13 @@ font-size:14px;
 }
 
 .dot.active {
-    background-color: #333; /* Active dot color */
+    background-color: #333; 
+}.checkbox-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox-option input[type="checkbox"] {
+    margin-right: 10px;
 }

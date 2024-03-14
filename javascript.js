@@ -98,16 +98,31 @@ function setupBurgerMenu() {
     const burgerMenuToggle = document.getElementById('burgerMenuToggle');
     const burgerMenu = document.getElementById('burgerMenu');
 
+    // Initially hide the burger menu
+    burgerMenu.style.display = 'none';
+
     if (burgerMenuToggle && burgerMenu) {
-        burgerMenuToggle.addEventListener('click', () => {
-          
-            if (burgerMenu.style.display === 'none' || !burgerMenu.style.display) {
-                burgerMenu.style.display = 'block';
-            } else {
+        burgerMenuToggle.addEventListener('click', (event) => {
+            // Prevents the document click listener from immediately closing the menu
+            event.stopPropagation();
+
+            burgerMenu.style.display = burgerMenu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close the menu when a menu item is clicked
+        Array.from(burgerMenu.children).forEach(item => {
+            item.addEventListener('click', () => {
                 burgerMenu.style.display = 'none';
-            }
+            });
         });
     }
+
+    // Close the burger menu when clicking anywhere outside the menu
+    document.addEventListener('click', (event) => {
+        if (burgerMenu.style.display === 'block' && !burgerMenu.contains(event.target)) {
+            burgerMenu.style.display = 'none';
+        }
+    });
 }
 
 
@@ -155,18 +170,38 @@ function saveDataCollectionPreferences() {
         preferences[key] = value;
     });
 
+
     localStorage.setItem('dataCollectionPreferences', JSON.stringify(preferences));
 
+  
+    updateCheckboxVisualState();
+
     alert("Preferences saved.");
-    showScreen('home');
+    showScreen('informationGathered');
 }
 
+function updateCheckboxVisualState() {
+    document.querySelectorAll('#dataCollectionForm .checkbox-option').forEach(function(option) {
+        var checkbox = option.querySelector('input[type="checkbox"]');
+        if (checkbox.checked) {
+            option.style.color = 'inherit'; // Active color
+        } else {
+            option.style.color = '#cccccc'; // Faded color
+        }
+    });
+}
 
 function applyDataCollectionPreferences() {
     var preferences = JSON.parse(localStorage.getItem('dataCollectionPreferences') || '{}');
     document.querySelectorAll('#dataCollectionForm input[type="checkbox"]').forEach(function(checkbox) {
         checkbox.checked = preferences.hasOwnProperty(checkbox.id);
     });
+
+  
+    updateCheckboxVisualState();
 }
 
-document.getElementById('informationGathered').addEventListener('show', applyDataCollectionPreferences);
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('informationGathered').addEventListener('show', applyDataCollectionPreferences);
+});
