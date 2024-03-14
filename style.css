@@ -9,18 +9,10 @@ body {
     align-items: center;
     min-height: 100vh;
 }
-body, html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* Prevent scrolling which can interfere with swipe detection */
-}
-li{
-    list-style-type: none;
-    text-align: left;
 
-}
 .mentis-salus {
-    max-width: 400px;
+    max-width: 450px;
+  
     width: 100%;
     padding: 20px;
     border-radius: 10px;
@@ -28,7 +20,10 @@ li{
     background-color: #fffefe;
     text-align: center;
 }
-
+li {
+    list-style: none;
+    text-align: left;
+}
 .screen.hidden {
     display: none;
 }
@@ -206,14 +201,7 @@ transition: background-color 0.3s ease;
 font-size:14px;
 }
 
-.dots-indicator {
-    position: fixed;
-    bottom: 280px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 10; /* Ensure it's above other content */
-}
+
 
 .dot {
     display: inline-block;

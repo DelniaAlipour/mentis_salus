@@ -36,7 +36,8 @@
             <h2>Get Support</h2>
             <p>🌟 Feeling a bit overwhelmed? That's okay, and it's completely normal. I'm here with tools to help you find your calm. 🌟</p>
         <div class="vertical-buttons">
-            <button class="btn" onclick="showScreen('interventionEngage')">Start a Breathing Exercise</button>
+            <button class="btn" onclick="showScreen('interventionEngage')">Vibration Mode: on</button>
+            <button class="btn" onclick="showScreen('interventionEngage1')">Start a Breathing Exercise</button>
             <button class="btn" onclick="showScreen('interventionEngage2')">Try a Meditation Session</button>
             <button class="btn" onclick="showScreen('aiTherapistChat')">Chat with an AI Therapist</button>
             <button class="btn therapy" onclick="showScreen('connectTherapist')">Talk to your Therapist</button>
@@ -51,6 +52,11 @@
 
         <!-- Intervention Engagement Screen -->
         <div class="screen hidden" id="interventionEngage">
+
+          <p>Intervention Mode: Vibration</p>
+            <button class="btn" onclick="showScreen('feedback')">Complete Session</button>
+        </div>
+        <div class="screen hidden" id="interventionEngage1">
             <h2>Breathing Exercise</h2>
             <button class="btn" onclick="showScreen('feedback')">Complete Session</button>
         </div>
@@ -119,9 +125,9 @@
                 <h2>Information Select</h2>
                 <p>to best assist you, your pin may collect and send the following information:</p>
                 <ul>
-                    <li>Heart Rate</li>
-                    <li>Body Temperature</li>
-                    <li>Vocal Pattern</li>
+                    <li>1- Heart Rate</li>
+                    <li>2- Body Temperature</li>
+                    <li>3- Vocal Pattern</li>
                 </ul>
             </div>
             <div class="nav-buttons">
