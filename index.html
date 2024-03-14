@@ -119,26 +119,32 @@
         </div>
 
         <!-- Information Gathered Screen -->
-        <div class="screen hidden" id="informationGathered">
-         
-            <div class="info-select">
-                <h2>Information Select</h2>
-                <p>to best assist you, your pin may collect the following information:</p>
-                <ul>
-                    <li>1- Heart Rate</li>
-                    <li>2- Body Temperature</li>
-                    <li>3- Vocal Pattern</li>
-                </ul>
-            </div>
-            <div class="nav-buttons">
-                <button class="btn" onclick="showScreen('getHelp')">&#8249; Get Help</button>
-         
-<button class="btn back-home-btn" onclick="showScreen('home')">
-    <i class="fas fa-home"></i> 
-</button>
-
-            </div>
+       <!-- Information Gathered Screen Updated -->
+<div class="screen hidden" id="informationGathered">
+    <h2>Information Select</h2>
+    <p>To best assist you, your pin may collect the following information:</p>
+    <form id="dataCollectionForm">
+        <div class="checkbox-option">
+            <input type="checkbox" id="heartRate" name="dataOptions" value="Heart Rate" checked>
+            <label for="heartRate">Heart Rate</label>
         </div>
+        <div class="checkbox-option">
+            <input type="checkbox" id="bodyTemperature" name="dataOptions" value="Body Temperature" checked>
+            <label for="bodyTemperature">Body Temperature</label>
+        </div>
+        <div class="checkbox-option">
+            <input type="checkbox" id="vocalPattern" name="dataOptions" value="Vocal Pattern" checked>
+            <label for="vocalPattern">Vocal Pattern</label>
+        </div>
+        <div class="checkbox-option">
+            <input type="checkbox" id="humidity" name="dataOptions" value="Humidity" checked>
+            <label for="humidity">Humidity</label>
+        </div>
+    </form>
+    <button class="btn" onclick="saveDataCollectionPreferences()">Save Preferences</button>
+    <button class="btn" onclick="showScreen('home')">Back to Home</button>
+</div>
+
         <!-- Emergency Options Screen -->
 <div class="screen hidden" id="emergencyOptions">
     <h2>Emergency Help Options</h2>

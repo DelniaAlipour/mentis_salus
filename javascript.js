@@ -141,3 +141,32 @@ function confirmEmergency() { showScreen('emergencyOptions'); updateDotsIndicato
 function callYourDoctor() { alert("Calling your doctor..."); }
 function shareSOS() { alert("Sharing SOS..."); }
 function call999() { alert("Calling 999..."); }
+function enableSensorSelection() {
+    document.getElementById("heartRateCheckbox").disabled = false;
+    document.getElementById("bodyTemperatureCheckbox").disabled = false;
+    document.getElementById("vocalPatternCheckbox").disabled = false;
+    document.getElementById("humidityCheckbox").disabled = false;
+}
+function saveDataCollectionPreferences() {
+    var form = document.getElementById('dataCollectionForm');
+    var formData = new FormData(form);
+    var preferences = {};
+    formData.forEach(function(value, key) {
+        preferences[key] = value;
+    });
+
+    localStorage.setItem('dataCollectionPreferences', JSON.stringify(preferences));
+
+    alert("Preferences saved.");
+    showScreen('home');
+}
+
+
+function applyDataCollectionPreferences() {
+    var preferences = JSON.parse(localStorage.getItem('dataCollectionPreferences') || '{}');
+    document.querySelectorAll('#dataCollectionForm input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.checked = preferences.hasOwnProperty(checkbox.id);
+    });
+}
+
+document.getElementById('informationGathered').addEventListener('show', applyDataCollectionPreferences);
