@@ -14,7 +14,11 @@ body, html {
     height: 100%;
     overflow: hidden; /* Prevent scrolling which can interfere with swipe detection */
 }
+li{
+    list-style-type: none;
+    text-align: left;
 
+}
 .mentis-salus {
     max-width: 400px;
     width: 100%;

@@ -1,13 +1,13 @@
 let touchStartX = 0;
 let touchStartTime = 0;
 let tapCount = 0;
-const screens = ['emergencyOptions', 'getHelp', 'interventionEngage', 'interventionEngage2', 'aiTherapistChat', 'connectTherapist', 'burgerMenu'];
+const screens = ['home','emergencyOptions', 'getHelp','interventionEngage1', 'interventionEngage', 'interventionEngage2', 'aiTherapistChat', 'connectTherapist', 'informationGathered'];
 let screenHistory = []; // Stack to keep track of navigation history
 
 document.addEventListener('DOMContentLoaded', () => {
     setupTouchEvents();
     setupBurgerMenu();
-    showScreen('home'); // Assuming 'getHelp' is the initial screen
+    showScreen('home'); 
 });
 
 function setupTouchEvents() {
