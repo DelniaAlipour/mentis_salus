@@ -1,14 +1,59 @@
 let touchStartX = 0;
-let touchEndX = 0;
-let navigationStack = ['home']; // Initialize with the home screen
+let touchStartTime = 0;
+let tapCount = 0;
+const screens = ['emergencyOptions', 'interventionEngage', 'aiTherapistChat', 'connectTherapist']; // Define screen IDs
+let currentScreenIndex = 0; // Start with the first screen
 
-// Function to handle swiping gestures
-function handleGesture() {
-    if (touchEndX < touchStartX) navigateForward();
-    if (touchEndX > touchStartX) navigateBackward();
+document.addEventListener('DOMContentLoaded', () => {
+    // Setup swipe and tap listeners
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartTime = Date.now();
+    }, false);
+
+    document.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndTime = Date.now();
+        const duration = touchEndTime - touchStartTime;
+
+        if (duration < 300) { // Consider as tap if duration is less than 300ms
+            tapCount++;
+            setTimeout(() => { tapCount = 0; }, 400); // Reset tap count after 400ms
+            if (tapCount === 3) { // Trigger on triple tap
+                tapCount = 0;
+                showScreen('emergencyOptions');
+                updateDotsIndicator(screens.indexOf('emergencyOptions'));
+            }
+        } else { // Consider as swipe
+            handleGesture(touchEndX);
+        }
+    }, false);
+
+    // Initialize dots indicator for the home screen
+    updateDotsIndicator(currentScreenIndex);
+
+    // Other event listeners like burger menu toggle...
+    setupBurgerMenu();
+});
+
+function handleGesture(touchEndX) {
+    if (touchEndX < touchStartX - 50) navigateToScreen(1); // Swipe left to go forward
+    if (touchEndX > touchStartX + 50) navigateToScreen(-1); // Swipe right to go back
 }
 
-// Function to display a specific screen
+function navigateToScreen(direction) {
+    currentScreenIndex = (currentScreenIndex + direction + screens.length) % screens.length;
+    showScreen(screens[currentScreenIndex]);
+    updateDotsIndicator(currentScreenIndex);
+}
+
+function updateDotsIndicator(activeIndex) {
+    const dots = document.querySelectorAll('.dots-indicator .dot');
+    dots.forEach((dot, index) => {
+        dot.className = index === activeIndex ? 'dot active' : 'dot';
+    });
+}
+
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.add('hidden');
@@ -17,78 +62,60 @@ function showScreen(screenId) {
     const screenToShow = document.getElementById(screenId);
     if (screenToShow) {
         screenToShow.classList.remove('hidden');
-        // Push only if it's a new screen
-        if (navigationStack[navigationStack.length - 1] !== screenId) {
-            navigationStack.push(screenId);
-        }
     }
 }
 
-// Function to navigate back in the navigation stack
-function goBack() {
-    if (navigationStack.length > 1) {
-        navigationStack.pop(); // Remove the current screen
-        const previousScreenId = navigationStack[navigationStack.length - 1];
-        showScreen(previousScreenId);
+function setupBurgerMenu() {
+    const burgerMenuToggle = document.getElementById('burgerMenuToggle');
+    const burgerMenu = document.getElementById('burgerMenu');
+
+    if (burgerMenuToggle && burgerMenu) {
+        burgerMenuToggle.addEventListener('click', () => {
+            burgerMenu.style.display = burgerMenu.style.display === 'none' || burgerMenu.style.display === '' ? 'block' : 'none';
+        });
     }
 }
 
-// Function to navigate forward (placeholder for your navigation logic)
-function navigateForward() {
-    // Implement your logic to determine the next screen
-    console.log("Navigate forward");
-    // Example: showScreen('nextScreenId');
-}
-
-// Function to navigate backward
-function navigateBackward() {
-    goBack();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Swipe gesture event listeners
-    document.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-
-    document.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleGesture();
-    }, false);
-
-    // Burger menu toggle
-    document.getElementById('burgerMenuToggle').addEventListener('click', () => {
-        const menu = document.getElementById('burgerMenu');
-        menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
-    });
-});
-
-// Function to submit feedback
+// Example function for submitting feedback
 function submitFeedback() {
     alert("Feedback submitted. Thank you!");
     document.getElementById('feedbackText').value = '';
     showScreen('home');
+    updateDotsIndicator(screens.indexOf('home'));
 }
 
-// Function to send a message in the chat
+// Example function for sending a message
 function sendMessage() {
     const input = document.getElementById('userInput');
     const chatContainer = document.getElementById('chatContainer');
+    if (input && chatContainer) {
+        const userMessage = document.createElement('p');
+        userMessage.textContent = "You: " + input.value;
+        chatContainer.appendChild(userMessage);
 
-    const userMessage = document.createElement('p');
-    userMessage.textContent = "You: " + input.value;
-    chatContainer.appendChild(userMessage);
+        const aiResponse = document.createElement('p');
+        aiResponse.textContent = "AI Therapist: I understand. How does that make you feel?";
+        chatContainer.appendChild(aiResponse);
 
-    const aiResponse = document.createElement('p');
-    aiResponse.textContent = "AI Therapist: I understand. How does that make you feel?";
-    chatContainer.appendChild(aiResponse);
-
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-    input.value = '';
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        input.value = '';
+    }
 }
 
 // Emergency and doctor functions
-function confirmEmergency() { showScreen('emergencyOptions'); }
-function callYourDoctor() { alert("Calling your doctor..."); }
-function shareSOS() { alert("Sharing SOS..."); }
-function call999() { alert("Calling 999..."); }
+function confirmEmergency() {
+    showScreen('emergencyOptions');
+    updateDotsIndicator(screens.indexOf('emergencyOptions'));
+}
+
+function callYourDoctor() {
+    alert("Calling your doctor...");
+}
+
+function shareSOS() {
+    alert("Sharing SOS...");
+}
+
+function call999() {
+    alert("Calling 999...");
+}
