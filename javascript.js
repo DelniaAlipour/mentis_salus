@@ -1,11 +1,16 @@
 let touchStartX = 0;
 let touchStartTime = 0;
 let tapCount = 0;
-const screens = ['emergencyOptions', 'interventionEngage', 'aiTherapistChat', 'connectTherapist']; // Define screen IDs
-let currentScreenIndex = 0; // Start with the first screen
+const screens = ['home', 'emergencyOptions', 'interventionEngage', 'aiTherapistChat', 'connectTherapist']; // Added 'home' to screens
+let currentScreenIndex = 0; // Start with 'home'
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Setup swipe and tap listeners
+    setupTouchEvents();
+    updateDotsIndicator(currentScreenIndex); // Initialize dots indicator
+    setupBurgerMenu();
+});
+
+function setupTouchEvents() {
     document.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
         touchStartTime = Date.now();
@@ -16,29 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const touchEndTime = Date.now();
         const duration = touchEndTime - touchStartTime;
 
-        if (duration < 300) { // Consider as tap if duration is less than 300ms
-            tapCount++;
-            setTimeout(() => { tapCount = 0; }, 400); // Reset tap count after 400ms
-            if (tapCount === 3) { // Trigger on triple tap
-                tapCount = 0;
-                showScreen('emergencyOptions');
-                updateDotsIndicator(screens.indexOf('emergencyOptions'));
-            }
-        } else { // Consider as swipe
-            handleGesture(touchEndX);
+        if (duration < 300) { // Short touch duration suggests a tap
+            handleTap();
+        } else { // Longer duration suggests a swipe
+            handleSwipe(touchEndX);
         }
     }, false);
+}
 
-    // Initialize dots indicator for the home screen
-    updateDotsIndicator(currentScreenIndex);
+function handleTap() {
+    tapCount++;
+    setTimeout(() => { tapCount = 0; }, 500); // Reset tap count after 500ms
 
-    // Other event listeners like burger menu toggle...
-    setupBurgerMenu();
-});
+    if (tapCount === 3) { // Triple tap detected
+        tapCount = 0; // Reset tap count
+        showScreen('emergencyOptions'); // Go to emergency screen
+        updateDotsIndicator(screens.indexOf('emergencyOptions')); // Update indicator
+    }
+}
 
-function handleGesture(touchEndX) {
-    if (touchEndX < touchStartX - 50) navigateToScreen(1); // Swipe left to go forward
-    if (touchEndX > touchStartX + 50) navigateToScreen(-1); // Swipe right to go back
+function handleSwipe(touchEndX) {
+    let direction = touchEndX > touchStartX ? -1 : 1; // Determine swipe direction
+    navigateToScreen(direction);
 }
 
 function navigateToScreen(direction) {
@@ -48,9 +52,13 @@ function navigateToScreen(direction) {
 }
 
 function updateDotsIndicator(activeIndex) {
-    const dots = document.querySelectorAll('.dots-indicator .dot');
-    dots.forEach((dot, index) => {
-        dot.className = index === activeIndex ? 'dot active' : 'dot';
+    const dotsContainer = document.querySelector('.dots-indicator');
+    dotsContainer.innerHTML = ''; // Clear existing dots
+
+    screens.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (index === activeIndex ? ' active' : '');
+        dotsContainer.appendChild(dot);
     });
 }
 
@@ -69,14 +77,11 @@ function setupBurgerMenu() {
     const burgerMenuToggle = document.getElementById('burgerMenuToggle');
     const burgerMenu = document.getElementById('burgerMenu');
 
-    if (burgerMenuToggle && burgerMenu) {
-        burgerMenuToggle.addEventListener('click', () => {
-            burgerMenu.style.display = burgerMenu.style.display === 'none' || burgerMenu.style.display === '' ? 'block' : 'none';
-        });
-    }
+    burgerMenuToggle?.addEventListener('click', () => {
+        burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
+    });
 }
 
-// Example function for submitting feedback
 function submitFeedback() {
     alert("Feedback submitted. Thank you!");
     document.getElementById('feedbackText').value = '';
@@ -84,11 +89,11 @@ function submitFeedback() {
     updateDotsIndicator(screens.indexOf('home'));
 }
 
-// Example function for sending a message
 function sendMessage() {
     const input = document.getElementById('userInput');
     const chatContainer = document.getElementById('chatContainer');
-    if (input && chatContainer) {
+
+    if (input.value.trim()) {
         const userMessage = document.createElement('p');
         userMessage.textContent = "You: " + input.value;
         chatContainer.appendChild(userMessage);
@@ -102,20 +107,7 @@ function sendMessage() {
     }
 }
 
-// Emergency and doctor functions
-function confirmEmergency() {
-    showScreen('emergencyOptions');
-    updateDotsIndicator(screens.indexOf('emergencyOptions'));
-}
-
-function callYourDoctor() {
-    alert("Calling your doctor...");
-}
-
-function shareSOS() {
-    alert("Sharing SOS...");
-}
-
-function call999() {
-    alert("Calling 999...");
-}
+function confirmEmergency() { showScreen('emergencyOptions'); updateDotsIndicator(screens.indexOf('emergencyOptions')); }
+function callYourDoctor() { alert("Calling your doctor..."); }
+function shareSOS() { alert("Sharing SOS..."); }
+function call999() { alert("Calling 999..."); }

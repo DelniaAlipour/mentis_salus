@@ -200,22 +200,23 @@ font-size:14px;
 }
 
 .dots-indicator {
-    text-align: center;
     position: fixed;
-    bottom: 20px;
-    width: 100%;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 10; /* Ensure it's above other content */
 }
 
 .dot {
-    height: 10px;
-    width: 10px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
     display: inline-block;
-    transition: background-color 0.6s ease;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #bbb;
+    margin: 0 5px;
 }
 
 .dot.active {
-    background-color: #4a90e2; 
+    background-color: #333; /* Active dot color */
 }
