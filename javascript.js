@@ -1,13 +1,13 @@
 let touchStartX = 0;
 let touchStartTime = 0;
 let tapCount = 0;
-const screens = ['home', 'emergencyOptions', 'getHelp', 'interventionEngage', 'interventionEngage2','aiTherapistChat', 'connectTherapist', 'burgerMenu']; // Added 'home' to screens
-let currentScreenIndex = 0; 
+const screens = ['emergencyOptions', 'getHelp', 'interventionEngage', 'interventionEngage2', 'aiTherapistChat', 'connectTherapist', 'burgerMenu'];
+let screenHistory = []; // Stack to keep track of navigation history
 
 document.addEventListener('DOMContentLoaded', () => {
     setupTouchEvents();
-    updateDotsIndicator(currentScreenIndex); 
     setupBurgerMenu();
+    showScreen('home'); // Assuming 'getHelp' is the initial screen
 });
 
 function setupTouchEvents() {
@@ -21,9 +21,9 @@ function setupTouchEvents() {
         const touchEndTime = Date.now();
         const duration = touchEndTime - touchStartTime;
 
-        if (duration < 300) { // Short touch duration suggests a tap
+        if (duration < 300) { 
             handleTap();
-        } else { // Longer duration suggests a swipe
+        } else { 
             handleSwipe(touchEndX);
         }
     }, false);
@@ -31,36 +31,31 @@ function setupTouchEvents() {
 
 function handleTap() {
     tapCount++;
-    setTimeout(() => { tapCount = 0; }, 500); // Reset tap count after 500ms
-
-    if (tapCount === 3) { // Triple tap detected
-        tapCount = 0; // Reset tap count
-        showScreen('emergencyOptions'); // Go to emergency screen
-        updateDotsIndicator(screens.indexOf('emergencyOptions')); // Update indicator
+    if (tapCount === 3) {
+        setTimeout(() => { tapCount = 0; }, 500);
+        showScreen('emergencyOptions');
+    } else {
+        setTimeout(() => { tapCount = 0; }, 500);
     }
 }
 
 function handleSwipe(touchEndX) {
-    let direction = touchEndX > touchStartX ? -1 : 1; // Determine swipe direction
+    let direction = touchEndX > touchStartX ? 1 : -1;
     navigateToScreen(direction);
 }
 
 function navigateToScreen(direction) {
-    currentScreenIndex = (currentScreenIndex + direction + screens.length) % screens.length;
-    showScreen(screens[currentScreenIndex]);
-    updateDotsIndicator(currentScreenIndex);
+    // Swiping back - Go to the previous screen in history
+    if (direction === 1 && screenHistory.length > 1) {
+        goBack();
+    } else if (direction === -1) { // Swiping forward - Go to the next screen in a predefined order
+        let currentScreenId = screenHistory[screenHistory.length - 1];
+        let currentIndex = screens.indexOf(currentScreenId);
+        let nextIndex = (currentIndex + 1) % screens.length; // Cycle through the screens
+        showScreen(screens[nextIndex]);
+    }
 }
 
-function updateDotsIndicator(activeIndex) {
-    const dotsContainer = document.querySelector('.dots-indicator');
-    dotsContainer.innerHTML = ''; // Clear existing dots
-
-    screens.forEach((_, index) => {
-        const dot = document.createElement('span');
-        dot.className = 'dot' + (index === activeIndex ? ' active' : '');
-        dotsContainer.appendChild(dot);
-    });
-}
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
@@ -70,17 +65,55 @@ function showScreen(screenId) {
     const screenToShow = document.getElementById(screenId);
     if (screenToShow) {
         screenToShow.classList.remove('hidden');
+        updateNavigationHistory(screenId);
+        updateDotsIndicator();
     }
+}
+
+function updateNavigationHistory(screenId) {
+    if (screenHistory[screenHistory.length - 1] !== screenId) {
+        screenHistory.push(screenId);
+    }
+}
+
+function goBack() {
+    if (screenHistory.length > 1) {
+        screenHistory.pop(); // Remove current screen
+        const previousScreenId = screenHistory[screenHistory.length - 1];
+        showScreen(previousScreenId, false);
+    }
+}
+
+function updateDotsIndicator() {
+    const dotsContainer = document.querySelector('.dots-indicator');
+    dotsContainer.innerHTML = ''; // Clear existing dots
+
+    screens.forEach((screen, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (screen === screenHistory[screenHistory.length - 1] ? ' active' : '');
+        dotsContainer.appendChild(dot);
+    });
 }
 
 function setupBurgerMenu() {
     const burgerMenuToggle = document.getElementById('burgerMenuToggle');
     const burgerMenu = document.getElementById('burgerMenu');
 
-    burgerMenuToggle?.addEventListener('click', () => {
-        burgerMenu.style.display = burgerMenu.style.display === 'none' ? 'block' : 'none';
-    });
+    if (burgerMenuToggle && burgerMenu) {
+        burgerMenuToggle.addEventListener('click', () => {
+            // Toggle display of the burger menu
+            if (burgerMenu.style.display === 'none' || !burgerMenu.style.display) {
+                burgerMenu.style.display = 'block';
+            } else {
+                burgerMenu.style.display = 'none';
+            }
+        });
+    }
 }
+
+
+// Feedback, sendMessage, and other functions remain unchanged
+
 
 function submitFeedback() {
     alert("Feedback submitted. Thank you!");
@@ -106,6 +139,7 @@ function sendMessage() {
         input.value = '';
     }
 }
+
 
 function confirmEmergency() { showScreen('emergencyOptions'); updateDotsIndicator(screens.indexOf('emergencyOptions')); }
 function callYourDoctor() { alert("Calling your doctor..."); }

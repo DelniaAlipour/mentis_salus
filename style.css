@@ -128,6 +128,8 @@ font-size: 24px;
 cursor: pointer;
 margin: 0 5px;
 }
+#burgerMenu {
+    display: none;
 
 .burger-menu .btn, .burger-menu .icon-btn {
 display: block;
@@ -201,7 +203,7 @@ font-size:14px;
 
 .dots-indicator {
     position: fixed;
-    bottom: 10px;
+    bottom: 290px;
     left: 0;
     right: 0;
     text-align: center;
