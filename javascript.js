@@ -98,18 +98,18 @@ function setupBurgerMenu() {
     const burgerMenuToggle = document.getElementById('burgerMenuToggle');
     const burgerMenu = document.getElementById('burgerMenu');
 
-    // Initially hide the burger menu
+  
     burgerMenu.style.display = 'none';
 
     if (burgerMenuToggle && burgerMenu) {
         burgerMenuToggle.addEventListener('click', (event) => {
-            // Prevents the document click listener from immediately closing the menu
+          
             event.stopPropagation();
 
             burgerMenu.style.display = burgerMenu.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Close the menu when a menu item is clicked
+    
         Array.from(burgerMenu.children).forEach(item => {
             item.addEventListener('click', () => {
                 burgerMenu.style.display = 'none';
@@ -117,7 +117,7 @@ function setupBurgerMenu() {
         });
     }
 
-    // Close the burger menu when clicking anywhere outside the menu
+
     document.addEventListener('click', (event) => {
         if (burgerMenu.style.display === 'block' && !burgerMenu.contains(event.target)) {
             burgerMenu.style.display = 'none';
@@ -170,15 +170,21 @@ function saveDataCollectionPreferences() {
         preferences[key] = value;
     });
 
-
-    localStorage.setItem('dataCollectionPreferences', JSON.stringify(preferences));
-
   
+    localStorage.setItem('dataCollectionPreferences', JSON.stringify(preferences));
     updateCheckboxVisualState();
 
     alert("Preferences saved.");
-    showScreen('informationGathered');
+
+    const settingsPage = document.getElementById('settings');
+    if (settingsPage.classList.contains('hidden')) {
+        settingsPage.classList.remove('hidden');
+    }
+
+    document.querySelector('.settings-buttons').style.display = 'none';
+    document.getElementById('informationSettings').style.display = 'block';
 }
+
 
 function updateCheckboxVisualState() {
     document.querySelectorAll('#dataCollectionForm .checkbox-option').forEach(function(option) {
@@ -204,4 +210,28 @@ function applyDataCollectionPreferences() {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('informationGathered').addEventListener('show', applyDataCollectionPreferences);
+});
+
+function toggleVisibility(elementId) {
+    const element = document.getElementById(elementId);
+    const settingsButtons = document.querySelector('.settings-buttons');
+
+    if (element.style.display === "none" || element.style.display === "") {
+    
+        settingsButtons.style.display = "none";
+
+
+        element.style.display = "block";
+    } else {
+
+        settingsButtons.style.display = "block";
+
+
+        element.style.display = "none";
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.settings-options').forEach(function(el) {
+        el.style.display = "none";
+    });
 });

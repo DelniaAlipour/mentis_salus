@@ -107,41 +107,61 @@
             <button class="btn back-btn" onclick="goBack()">Back</button>
         </div>
         
-        <!-- Settings Screen -->
         <div class="screen hidden" id="settings">
             <h2>Settings</h2>
-            <button class="btn" >Profile</button>
-            <button class="btn" >Privacy</button>
-            <button class="btn" >Notifications</button>
-            <button class="btn back-home-btn" onclick="showScreen('home')">
-                <i class="fas fa-home"></i> 
-            </button>
+            <div class="settings-buttons vertical-buttons">
+                <button class="btn" id="profileBtn">Profile</button>
+              
+        
+                <button class="btn" id="infoSettingsBtn" onclick="toggleVisibility('informationSettings')">Information Settings</button>
+        
+                <button class="btn" id="notificationBtn">Notifications</button>
             
+            </div>
+        
+            <div id="informationSettings" class="settings-options hidden">
+                <h3>Information Select</h3>
+                <p>Choose the data you would like to collect to help us understand your stress levels better.</p>
+                <form id="dataCollectionForm">
+                   
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="heartRate" name="dataOptions" value="Heart Rate" checked>
+                            <label for="heartRate">Heart Rate</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="bodyTemperature" name="dataOptions" value="Body Temperature" checked>
+                            <label for="bodyTemperature">Body Temperature</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="vocalPattern" name="dataOptions" value="Vocal Pattern" checked>
+                            <label for="vocalPattern">Vocal Pattern</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="humidity" name="dataOptions" value="Humidity" checked>
+                            <label for="humidity">Humidity</label>
+                        </div>
+                   
+                </form>
+                
+                <button class="btn" onclick="saveDataCollectionPreferences()">Save Preferences</button>
+            </div>
+        
+            <button class="btn back-home-btn" onclick="showScreen('home')">
+                <i class="fas fa-home"></i> Back to Home
+            </button>
         </div>
-
+        
+        
         <!-- Information Gathered Screen -->
 <div class="screen hidden" id="informationGathered">
-    <h2>Information Select</h2>
-    <p>To best assist you, your pin may collect the following information:</p>
-    <form id="dataCollectionForm">
-        <div class="checkbox-option">
-            <input type="checkbox" id="heartRate" name="dataOptions" value="Heart Rate" checked>
-            <label for="heartRate">Heart Rate</label>
-        </div>
-        <div class="checkbox-option">
-            <input type="checkbox" id="bodyTemperature" name="dataOptions" value="Body Temperature" checked>
-            <label for="bodyTemperature">Body Temperature</label>
-        </div>
-        <div class="checkbox-option">
-            <input type="checkbox" id="vocalPattern" name="dataOptions" value="Vocal Pattern" checked>
-            <label for="vocalPattern">Vocal Pattern</label>
-        </div>
-        <div class="checkbox-option">
-            <input type="checkbox" id="humidity" name="dataOptions" value="Humidity" checked>
-            <label for="humidity">Humidity</label>
-        </div>
-    </form>
-    <button class="btn" onclick="saveDataCollectionPreferences()">Save Preferences</button>
+    <h2>Information Gathered</h2>
+    <p>Here's what we've learned about you so far:</p>
+    <ul>
+       
+        <li>Heart Rate: <span class="heart-rate">80 bpm</span></li>
+       <li>Body Temperature: <span class="temperature">36.5 °C</span></li>
+       <li>Vocal Patterns: <span class="vocal-patterns">Calm</span></li>
+       <li>Humidity: <span class="humidity">40%</span></li>
     <button class="btn" onclick="showScreen('home')">Back to Home</button>
 </div>
 
